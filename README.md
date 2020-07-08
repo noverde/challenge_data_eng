@@ -220,9 +220,9 @@ __*Data Analyst*__ your solution must be inside notebook ready to be run
 
 ## References
 
-Databricks Community: https://community.cloud.databricks.com
-all-spark-notebook docker: https://hub.docker.com/r/jupyter/all-spark-notebook/
-Google Colab: https://colab.research.google.com/
+- Databricks Community: https://community.cloud.databricks.com
+- all-spark-notebook docker: https://hub.docker.com/r/jupyter/all-spark-notebook/
+- Google Colab: https://colab.research.google.com/
 
 ### For Google Colab
 

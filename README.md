@@ -1,24 +1,40 @@
-# Desafio Noverde - Data Engineering
+# Noverde - Data Challenge
 
-## Introdução
+## Introduction - Let's Get Started
 
-A Noverde sendo uma empresa de empréstimos, há necessidade de construir modelos de behavior para entender melhor os nossos clientes.
-O time de data engineering prepara os dados para a equipe de data science.
-O objetivo do exercício é transformar os dados de entrada (raw data) em uma tabela de dados agregados, chamada `loan_documents`.
+This a challenge where you gonna be putting through a series of tests, in order to assess different skills that are valuable to our Data Team.
 
-## Raw data (input)
+At Noverde our Data Team is comprised of a wide variety of functions and personalities.
+We always encourage our Data Engineers and Analyst to put your Expertise and Studies to test, when facing any challenge you can use Any Language, Framework and Platform, that might help solve any challenge.
 
-Esses arquivos contêm dados parecidos com o que extraímos do nosso sistema:
-- https://noverde-data-engineering-test.s3.amazonaws.com/loans_sample.csv
-- https://noverde-data-engineering-test.s3.amazonaws.com/installments_sample.json
-- https://noverde-data-engineering-test.s3.amazonaws.com/payments_sample.parquet
+__*Data Engineer*__ your greatest responsibility is to create and maintain a secure, scalable and robust ETL pipeline to process files any formats and store them in a structured and easy to understand manner.
+__*Data Analyst*__ your greater resposability it's to aggregate data and transform it into information, insights, dashboards and databases to meet all the Internal (Data Team) and External (Bussiness Areas) needs.
 
+Noverde, a Fintech that works with a variety of Products and is a Data Driven Company.
+One of Products is __*Loan*__, that said, it happens our Data Analysts, Data Scientists and End Users need data to build their Dashboards, Studies, Models and to make decisions.
 
-## Aggregated data (output)
+> Note: You're free to use any language and technology to reach your goal. Languages, frameworks, platforms are not a constraint.
 
-O objetivo é gerar a tabela `loan_documents`, no formato parquet. Cada entry (row) da `loan_documents` deve conter os dados relativos a um emprestimo (loan), saber as parcelas (installments), pagamentos (payments), e algumas métricas pre-calculadas. As informações estão armazenadas usando tipos complexos (array, dictionary, nested structures). O arquivo parquet deverá ser compatível com o schema seguinte, para futuras consultas com o Hive Metastore.
+## Part 1 - ETL Building
 
-> Importante! Dentro do escopo deste teste, não há necessidade de verificar se de fato este schema do Hive é compatível. Esta definição serve de exemplo, para deixar mais claro qual é nosso objetivo.
+### Objective
+
+The key Objective it's Build a table named  `loan_documents`, saved as a Parquet File.
+
+### Data Source
+
+> Working with different Files Formats and aggregate them is part of the job.
+
+All data comes from our service architecture. For this teste the Service Team offered us a dump from different bases that treats the Loan Product:
+- Loan data as CSV files stored in this url: https://noverde-data-engineering-test.s3.amazonaws.com/loans_sample.csv
+- Installments data as JSON files stored in this url: https://noverde-data-engineering-test.s3.amazonaws.com/installments_sample.json
+- Payments data as Parquet files stored in this url: https://noverde-data-engineering-test.s3.amazonaws.com/payments_sample.parquet
+
+This files are similar to the ones we work when we speak of __*Loan*__.
+
+### Structute
+
+Each Row of the file `loan_documents` it's composed o the aggregate information of *loan*, *installments*, *payments* and some pre calculated metrics.
 
 ```sql
 CREATE EXTERNAL TABLE loan_documents (
@@ -42,10 +58,7 @@ OUTPUTFORMAT
 LOCATION '<PAQUET FILE PATH>'
 ```
 
-NOTA 1: "installments" deve ser um dicionário de (installment_number => due_date)  
-NOTE 2: '\<PAQUET FILE PATH\>' é o caminho do arquivo parquet
-
-Linha de exemplo (representada como um doc yaml):
+Example Row (As a YAML doc):
 
 ```yaml
 loan_id: 9243
@@ -66,39 +79,155 @@ payments:
   payment_date: "2017-07-01"
   method: boleto
   amount: 280.00
+- id: "8abaf860-9632-40e9-bfe0-33b67ded8c6d"
+  payment_date: "2017-09-01"
+  method: boleto
+  amount: 295.17
 metrics:
   latency: [false, false, false, true, true, true, false, ...]
-  over30: [false, false, false, false, false, false, false, ...]
+  over05: [false, false, true, ...]
+  over15: [false, false, true, ...]
+  over30: [false, false, false, ...]
 ```
 
-Obs: esses são valores fake
+> Note 1: There is no need to verifing if this Hive Schema is compatible. The main quest here it's to work with complex data Types like array, dictionary, nested structures.
+> Note 2: __*`installments`*__ it's a Dictionary using __`installment_number`__ as it's *key* and __`due_date`__ as it's *value*
 
-### Métricas (metrics)
-Cada métrica está armazenada na forma de um array, cujo index é o número de dias desde a originação (loan.accepted_at)
+### Metrics
+Each Metric it's store as an Array where witch every index it's a specific day from it's origination date *`loan.accepted_at_`* until yesterday
 
-- metric[0] é o valor da métrica no dia da originação
-- metric[1] é o valor da métrica um dia depois da originação
+##### "Latency"
+The `latency` metric is a list of Boolean values, where each value indicates if there is a delay in payment for the *Metric[x]* corresponding date.
 
-O último index corresponde à data de ontem.
+- Latency[0]: Origination date *`loan.accepted_at_`*. Example: `2020-07-01`
+- Latency[1]: One day later after the origination date *`loan.accepted_at_`*. Example: `2020-07-02`
+- Latency[n]: Yesterday. Example: `2020-07-07`
 
-### Definição da métrica "latency"
+#### "Over(N)" Metric
 
-A métrica `latency` (atraso) é uma lista de boolean, e indica se há atraso no pagamento de alguma parcela, numa determinada data.
+The `OverN` metric is a list of Boolean values, where each value indicates if payment of a specific installment *Metric[x]* had a `N` number of days in delay in payment.
 
-### Definição da  métrica "over(n)"
+- Over05[0]: The `payment_date` of the `installment number`[0] was made 05 days later than the `due date`
+- Over15[1]: The `payment_date` of the `installment number`[1] was made 15 days later than the `due date`
+- Over30[n]: The `payment_date` of the `installment number`[N] was made 30 days later than the `due date`
 
-On a given day, the loan has one of the three first payments overdue--"overdue" means that no payment has been received--. The number (n) indicates that the appraisal period is _n_ days after base date.
+## Part 2 - Data Analysis
 
-Por exemplo:
+### Objective
 
-- Se a data de vencimento de uma installment é 2017-06-04, e não foi realizado nenhum pagamento dentro de 30 dias, o valor de Over30 será TRUE depois de 2017-07-04.
-- Uma vez que o pagamento foi recebido, o valor de over30 é FALSE
+The key Objective it's to respond to a series of business questions made by our Business Areas with the result Table from Part - 1.
+The Answer for each question must have at least the Query used to generate the result and one of the following representations :
+- Table View
+- Parquet File
+- Chart
 
-## Requisitos
+### Analysis
 
-Você deve utilizar python, pyspark dentro do ambiante Google Colab, seguindo as intruções a seguir.
+1) What is Received Amount Ratio per Month and Year? What the day that __Noverde__ received value was the higher in each month?
 
-Para instalar Spark dentro de Google Colab, utilizaremos as instruções seguintes (adaptadas do blog https://movile.blog/introducao-a-spark-usando-o-google-colab/ )
+Result Examples:
+```
+|Month|Year|Expected_Received_Amount|Received_Amount|Received_Amount_Ratio|
+|-----|----|------------------------|---------------|---------------------|
+|01   |2019|10000.00                |9000.00        |90%                  |
+|02   |2019|20000.00                |1600.00        |80%                  |
+---------------------------------------------------------------------------
+
+|Day|Month|Year|Received_Amount|
+|---|-----|----|---------------|
+|01 |08   |2019|10000.00       |
+|23 |09   |2019|20000.00       |
+```
+
+2) One of our Investor wants to know what are the Key Portfolio Highlights for each Month?
+> Note: The Highlits are: `Average Payment Date`, `Average Interest Rate` and `Most Frequently Payday`.
+
+Result Examples:
+```
+|Month|Year|Avg_Period|Avg_Interest_Ratio|Freq_Payday|
+|-----|----|----------|------------------|-----------|
+|03   |2019|10.5      |8.0%              |20         |
+|04   |2019|10.6      |7.8%              |15         |
+|05   |2019|10.0      |7.5%              |20         |
+```
+
+3)	Thinking about our entire client portfolio, what is the real distribution between contracts with different terms and rates?
+> Note: The distribution are given by the amount of contracts (loans) per duration and tax rate
+
+Result Examples:
+```
+|Duration|Interest_Rate|Avg_Interest_Ratio|Freq_Payday|Amount_Contracts|
+|--------|-------------|------------------|-----------|----------------|
+|06      |3.12%        |20%               |           |                |
+|09      |3.12%        |17%               |           |                |
+|12      |3.12%        |8%                |           |                |
+|06      |5.15%        |0%                |           |                |
+|09      |5.15%        |2%                |           |                |
+```
+
+4)	What's the Ratio of Matured Loans in our Portfolio that has at least one installment with Over 30 in payment delay?
+> Note: Matured Loan in this question means any Loan that the first `installment_date` occurred at least one month ago--
+
+Result Examples:
+```
+|Portfolio|Matured|Over30_True|Matured_Ratio|
+|---------|-------|-----------|-------------|
+|15.000   |10.000 |3.500      |35%          |
+```
+
+## Parte 3 - Data Governance, Privacy, Data Quality and Catalog 
+
+Governance, catalog and quality are required skills in the Data Team. Everyone has a responsibility within the data we consume and produce for all Noverde.
+
+### Objective
+
+For this Part 3 the key Objective it's Fuction Based:
+ 
+ __*Data Engineer*__: We need to store all metadata so all datasets could be read on distinct tools. How would you store all metadata to build a catalog and secure your data ? Your solution should take into account data access and private data protection.
+ 
+ __*Data Analyst*__: We need to compare our Generated information (tables, datasets, dashboards, etc.) with the Source data. How will you create a verification step to be a quality assurance to confirm that Your data it's not for Joke.
+
+Briefly elaborate on your solution, frameworks, algorithms. If possible, implement the solution on your previous task.
+
+## Bonus Part - API development
+
+Everyone in __Noverde__ is addicted to Data and had a eager to get information from the Data Team, and your role here is to provide access not only for our Analysts and Data Scientist, but also for services deployed in our infrastructure.
+
+There’s our Web App that need to fetch some data. We need you to create an API that serves endpoints to return the following answers:
+
+The total amount of contracts made due a given date passed as a manual parameter
+The total amount of payments received in a given date passed as a manual parameter
+Top 3 `interest_rate`
+
+> Note: Use the data from the previous task to complete this one.
+> The API should answer back a JSON with the desirable information
+
+## Deliverable
+
+You know the drill: Any language, any framework, any platform. Feel free to use anything to help you finishing this tasks.
+
+*Tips*
+- All of your Queries needs to perform well, be maintainable and return accurate data.
+- All of you Solutions needs to be scalable! The SRE Team insists that we approach carefully with the "Execution Size" in each month. 
+
+Deliverable
+Provide a docker image with a backend service. Running this container should start the necessary infrastructure to provide the endpoints
+
+
+__Part 1, 2 and 3 are Mandatory. The Bonus Part it's optional__
+
+__*Data Engineer*__ your solution must be inside a docker image, script or notebook ready to be run.
+__*Data Analyst*__ your solution must be inside notebook ready to be run
+
+## References
+
+Databricks Community: https://community.cloud.databricks.com
+all-spark-notebook docker: https://hub.docker.com/r/jupyter/all-spark-notebook/
+Google Colab: https://colab.research.google.com/
+
+### For Google Colab
+
+Following these instructions and you'll be able to use Spark on the Google Colab Notebook (Adaptation from https://movile.blog/introducao-a-spark-usando-o-google-colab/)
 
 ```
 !apt-get install openjdk-8-jdk-headless -qq > /dev/null
@@ -121,66 +250,9 @@ findspark.init()
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.master("local[*]").getOrCreate()
 ```
-
-Após a execução deste código, será possível executar funções do Spark, por exemplo
+#After this box of code you will be able to use Spark freely#
 
 ```
 df = spark.read.csv("localfile.csv")
 
 ```
-
-Importante! O teste deve ser resolvido dentro dos limites de recursos do ambiante Google Colab.
-
-
-### Conteúdo do notebook
-
-Além de transformar dados, nossos notebooks contém i) validações básicas, para ajudar nas investigações caso tenha suspeita de erros no dados e ii) análises da carteira, para servir de auxiliar no direcionamento de estudo mais detalhados.
-
-Uma vez que a tabela `loan_documentos` foi gerada, queremos saber as seguintes informações:
-
-1)	Para cada mês de 2019, qual foi a proporção do montante recebido, em relação ao que era esperado? Ex: Vamos supor que em janeiro 2019 recebemos R$ 9000, e o valor total devido neste mês era R$ 10000, você deve criar uma query que retorne da seguinte forma:
-
-|month|year|amount|ratio|
-|-|-|-|-|
-|01|2019|10000.00|90%|
-|02|2019|20000.00|80%|
-|03|2019|50000.00|70%|
-|04|2019|10000.00|90%|
-|05|2019|10000.00|95%|
-
-2)	Para cada mês de 2019, quais eram as características médias da carteira (key portfolio highlights)?
-Ex: Um investidor deseja saber qual é o prazo médio (avg_period), taxa de juros média (avg_interest_rate) e dia de vencimento mais frequente (freq_payday), e para isso deverá ser construída uma query com os seguintes campos:
-
-|month|year|avg_period|avg_interest_ratio|freq_payday|
-|-|-|-|-|-|
-|01|2019|10.8|7.9%|15|
-|02|2019|9.9|8.5%|15|
-|03|2019|10.5|8.0%|20|
-|04|2019|10.6|7.8%|15|
-|05|2019|10.0|7.5%|20|
-
-3)	Para o portfolio como um todo, como se dá a distribuição dos contratos entre os diferentes prazos e taxas?
-Ex: Do total de contratos (loan_id), quantos possuem 6 meses de duração e taxa de 5.74%, ou 12 meses de duração e 5.15% de juros? A query deve retornar uma matriz semelhante a exemplificada abaixo:
-
-|period|interest_rate|count_loan_id|avg_interest_ratio|freq_payday|
-|-|-|-|-|-|
-|06|3.12|20|||
-|09|3.12|17|||
-|12|3.12|08|||
-|06|5.15|00|||
-|09|5.15|2|||
-
-4)	Qual a proporção de empréstimos maturados da carteira (vencimento da primeira parcela ocorreu há pelo menos 30 dias) que estão hoje com Over30 = TRUE?
-Ex: Vamos supor que a carteira está crescendo rapidamente, chegando a um total de 15.000 contratos (loan_id), sendo que apenas 10.000 já passaram pelo primeiro vencimento há pelo menos 30 dias e 3.500 encontram-se em atraso. Sua query deverá retornar o seguinte resultado:
-
-|total_portfolio|matured_portfolio|over30_true|ratio|
-|-|-|-|-|
-|15.000|10.000|3.500|35%|
-
-O resultado poderá ser representado por gráficos da sua escolha, e aparecer dentro do notebook, usando as bibliotecas que quiser.
-
-
-## Entrega
-
-Você deverá compartilhar a solução na forma de um notebook do Google Colab ( https://colab.research.google.com/ )
-

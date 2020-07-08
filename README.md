@@ -8,6 +8,7 @@ At Noverde our Data Team is comprised of a wide variety of functions and persona
 We always encourage our Data Engineers and Analyst to put your Expertise and Studies to test, when facing any challenge you can use Any Language, Framework and Platform, that might help solve any challenge.
 
 __*Data Engineer*__ your greatest responsibility is to create and maintain a secure, scalable and robust ETL pipeline to process files any formats and store them in a structured and easy to understand manner.
+
 __*Data Analyst*__ your greater resposability it's to aggregate data and transform it into information, insights, dashboards and databases to meet all the Internal (Data Team) and External (Bussiness Areas) needs.
 
 Noverde, a Fintech that works with a variety of Products and is a Data Driven Company.
@@ -125,55 +126,55 @@ The Answer for each question must have at least the Query used to generate the r
 
 1) What is Received Amount Ratio per Month and Year? What the day that __Noverde__ received value was the higher in each month?
 
-Result Examples:
-```
-|Month|Year|Expected_Received_Amount|Received_Amount|Received_Amount_Ratio|
-|-----|----|------------------------|---------------|---------------------|
-|01   |2019|10000.00                |9000.00        |90%                  |
-|02   |2019|20000.00                |1600.00        |80%                  |
----------------------------------------------------------------------------
+  Result Example:
+  ```
+  |Month|Year|Expected_Received_Amount|Received_Amount|Received_Amount_Ratio|
+  |-----|----|------------------------|---------------|---------------------|
+  |01   |2019|10000.00                |9000.00        |90%                  |
+  |02   |2019|20000.00                |1600.00        |80%                  |
+  ---------------------------------------------------------------------------
 
-|Day|Month|Year|Received_Amount|
-|---|-----|----|---------------|
-|01 |08   |2019|10000.00       |
-|23 |09   |2019|20000.00       |
-```
+  |Day|Month|Year|Received_Amount|
+  |---|-----|----|---------------|
+  |01 |08   |2019|10000.00       |
+  |23 |09   |2019|20000.00       |
+  ```
 
 2) One of our Investor wants to know what are the Key Portfolio Highlights for each Month?
-> Note: The Highlits are: `Average Payment Date`, `Average Interest Rate` and `Most Frequently Payday`.
+  > Note: The Highlits are: `Average Payment Date`, `Average Interest Rate` and `Most Frequently Payday`.
 
-Result Examples:
-```
-|Month|Year|Avg_Period|Avg_Interest_Ratio|Freq_Payday|
-|-----|----|----------|------------------|-----------|
-|03   |2019|10.5      |8.0%              |20         |
-|04   |2019|10.6      |7.8%              |15         |
-|05   |2019|10.0      |7.5%              |20         |
-```
+  Result Example:
+  ```
+  |Month|Year|Avg_Period|Avg_Interest_Ratio|Freq_Payday|
+  |-----|----|----------|------------------|-----------|
+  |03   |2019|10.5      |8.0%              |20         |
+  |04   |2019|10.6      |7.8%              |15         |
+  |05   |2019|10.0      |7.5%              |20         |
+  ```
 
 3)	Thinking about our entire client portfolio, what is the real distribution between contracts with different terms and rates?
-> Note: The distribution are given by the amount of contracts (loans) per duration and tax rate
+  > Note: The distribution are given by the amount of contracts (loans) per duration and tax rate
 
-Result Examples:
-```
-|Duration|Interest_Rate|Avg_Interest_Ratio|Freq_Payday|Amount_Contracts|
-|--------|-------------|------------------|-----------|----------------|
-|06      |3.12%        |20%               |           |                |
-|09      |3.12%        |17%               |           |                |
-|12      |3.12%        |8%                |           |                |
-|06      |5.15%        |0%                |           |                |
-|09      |5.15%        |2%                |           |                |
-```
+  Result Example:
+  ```
+  |Duration|Interest_Rate|Avg_Interest_Ratio|Freq_Payday|Amount_Contracts|
+  |--------|-------------|------------------|-----------|----------------|
+  |06      |3.12%        |20%               |           |                |
+  |09      |3.12%        |17%               |           |                |
+  |12      |3.12%        |8%                |           |                |
+  |06      |5.15%        |0%                |           |                |
+  |09      |5.15%        |2%                |           |                |
+  ```
 
 4)	What's the Ratio of Matured Loans in our Portfolio that has at least one installment with Over 30 in payment delay?
-> Note: Matured Loan in this question means any Loan that the first `installment_date` occurred at least one month ago--
+  > Note: Matured Loan in this question means any Loan that the first `installment_date` occurred at least one month ago--
 
-Result Examples:
-```
-|Portfolio|Matured|Over30_True|Matured_Ratio|
-|---------|-------|-----------|-------------|
-|15.000   |10.000 |3.500      |35%          |
-```
+  Result Example:
+  ```
+  |Portfolio|Matured|Over30_True|Matured_Ratio|
+  |---------|-------|-----------|-------------|
+  |15.000   |10.000 |3.500      |35%          |
+  ```
 
 ## Parte 3 - Data Governance, Privacy, Data Quality and Catalog 
 
@@ -210,9 +211,7 @@ You know the drill: Any language, any framework, any platform. Feel free to use 
 - All of your Queries needs to perform well, be maintainable and return accurate data.
 - All of you Solutions needs to be scalable! The SRE Team insists that we approach carefully with the "Execution Size" in each month. 
 
-Deliverable
 Provide a docker image with a backend service. Running this container should start the necessary infrastructure to provide the endpoints
-
 
 __Part 1, 2 and 3 are Mandatory. The Bonus Part it's optional__
 

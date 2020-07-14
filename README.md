@@ -184,9 +184,6 @@ You know the drill: Any language, any framework, any platform. Feel free to use 
 - All of your Queries need to perform well, be maintainable and return accurate data.
 - All of you Solutions needs to be scalable! The SRE Team insists that we approach carefully with the "Execution Size" in each month. 
 
-
-__Part 1, 2 and 3 are Mandatory. The Bonus Part it's optional__
-
 __*Data Engineer*__ your solution must be inside a docker image, script or notebook ready to be run. If you provide a docker image, please send it with a backend service. Running this container should start the necessary infrastructure to provide the endpoints
 __*Data Analyst*__ your solution must be inside notebook ready to be run
 

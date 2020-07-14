@@ -2,16 +2,16 @@
 
 ## Introduction - Let's Get Started
 
-This a challenge where you gonna be putting through a series of tests, in order to assess different skills that are valuable to our Data Team.
+In this challenge where you'll be put through a series of tests, in order to assess different skills that are valuable to our Data Team.
 
 At Noverde our Data Team is comprised of a wide variety of functions and personalities.
-We always encourage our Data Engineers and Analyst to put your Expertise and Studies to test, when facing any challenge you can use Any Language, Framework and Platform, that might help solve any challenge.
+We always encourage our Data Engineers and Analyst to put your Expertise and Studies to test, using Any Language, Framework and Platform, that might help solve any challenge.
 
 __*Data Engineer*__ your greatest responsibility is to create and maintain a secure, scalable and robust ETL pipeline to process files any formats and store them in a structured and easy to understand manner.
 
 __*Data Analyst*__ your greater resposability it's to aggregate data and transform it into information, insights, dashboards and databases to meet all the Internal (Data Team) and External (Bussiness Areas) needs.
 
-Noverde, a Fintech that works with a variety of Products and is a Data Driven Company.
+Noverde is a Data Driven Company that works with a variety of Products.
 One of Products is __*Loan*__, that said, it happens our Data Analysts, Data Scientists and End Users need data to build their Dashboards, Studies, Models and to make decisions.
 
 > Note: You're free to use any language and technology to reach your goal. Languages, frameworks, platforms are not a constraint.
@@ -26,7 +26,7 @@ The key Objective it's Build a table named  `loan_documents`, saved as a Parquet
 
 > Working with different Files Formats and aggregate them is part of the job.
 
-All data comes from our service architecture. For this teste the Service Team offered us a dump from different bases that treats the Loan Product:
+All data comes from our service architecture. For this test the Service Team offered us a dump from different bases that treats the Loan Product:
 - Loan data as CSV files stored in this url: https://noverde-data-engineering-test.s3.amazonaws.com/loans_sample.csv
 - Installments data as JSON files stored in this url: https://noverde-data-engineering-test.s3.amazonaws.com/installments_sample.json
 - Payments data as Parquet files stored in this url: https://noverde-data-engineering-test.s3.amazonaws.com/payments_sample.parquet
@@ -35,7 +35,7 @@ This files are similar to the ones we work when we speak of __*Loan*__.
 
 ### Structute
 
-Each Row of the file `loan_documents` it's composed o the aggregate information of *loan*, *installments*, *payments* and some pre calculated metrics.
+Each Row of the file `loan_documents` it's composed by the aggregate information of *loan*, *installments*, *payments* and some pre calculated metrics.
 
 ```sql
 CREATE EXTERNAL TABLE loan_documents (
@@ -91,11 +91,11 @@ metrics:
   over30: [false, false, false, ...]
 ```
 
-> Note 1: There is no need to verifing if this Hive Schema is compatible. The main quest here it's to work with complex data Types like array, dictionary, nested structures.
-> Note 2: __*`installments`*__ it's a Dictionary using __`installment_number`__ as it's *key* and __`due_date`__ as it's *value*
+> Note 1: There is no need to verifying if this Hive Schema is compatible. The main quest here it's to work with complex data Types like array, dictionary and nested structures.
+> Note 2: __*`installments`*__ is a Dictionary using __`installment_number`__ as it's *key* and __`due_date`__ as it's *value*
 
 ### Metrics
-Each Metric it's store as an Array where witch every index it's a specific day from it's origination date *`loan.accepted_at_`* until yesterday
+Each Metric it's stored as an Array where every index it's a specific day from it's origination date *`loan.accepted_at_`* until yesterday.
 
 ##### "Latency"
 The `latency` metric is a list of Boolean values, where each value indicates if there is a delay in payment for the *Metric[x]* corresponding date.
@@ -176,46 +176,18 @@ The Answer for each question must have at least the Query used to generate the r
   |15.000   |10.000 |3.500      |35%          |
   ```
 
-## Parte 3 - Data Governance, Privacy, Data Quality and Catalog 
-
-Governance, catalog and quality are required skills in the Data Team. Everyone has a responsibility within the data we consume and produce for all Noverde.
-
-### Objective
-
-For this Part 3 the key Objective it's Fuction Based:
- 
- __*Data Engineer*__: We need to store all metadata so all datasets could be read on distinct tools. How would you store all metadata to build a catalog and secure your data ? Your solution should take into account data access and private data protection.
- 
- __*Data Analyst*__: We need to compare our Generated information (tables, datasets, dashboards, etc.) with the Source data. How will you create a verification step to be a quality assurance to confirm that Your data it's not for Joke.
-
-Briefly elaborate on your solution, frameworks, algorithms. If possible, implement the solution on your previous task.
-
-## Bonus Part - API development
-
-Everyone in __Noverde__ is addicted to Data and had a eager to get information from the Data Team, and your role here is to provide access not only for our Analysts and Data Scientist, but also for services deployed in our infrastructure.
-
-There’s our Web App that need to fetch some data. We need you to create an API that serves endpoints to return the following answers:
-
-The total amount of contracts made due a given date passed as a manual parameter
-The total amount of payments received in a given date passed as a manual parameter
-Top 3 `interest_rate`
-
-> Note: Use the data from the previous task to complete this one.
-> The API should answer back a JSON with the desirable information
-
 ## Deliverable
 
 You know the drill: Any language, any framework, any platform. Feel free to use anything to help you finishing this tasks.
 
 *Tips*
-- All of your Queries needs to perform well, be maintainable and return accurate data.
+- All of your Queries need to perform well, be maintainable and return accurate data.
 - All of you Solutions needs to be scalable! The SRE Team insists that we approach carefully with the "Execution Size" in each month. 
 
-Provide a docker image with a backend service. Running this container should start the necessary infrastructure to provide the endpoints
 
 __Part 1, 2 and 3 are Mandatory. The Bonus Part it's optional__
 
-__*Data Engineer*__ your solution must be inside a docker image, script or notebook ready to be run.
+__*Data Engineer*__ your solution must be inside a docker image, script or notebook ready to be run. If you provide a docker image, please send it with a backend service. Running this container should start the necessary infrastructure to provide the endpoints
 __*Data Analyst*__ your solution must be inside notebook ready to be run
 
 ## References

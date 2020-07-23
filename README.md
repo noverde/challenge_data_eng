@@ -123,7 +123,7 @@ The Answer for each question must have at least the Query used to generate the r
 
 ### Analysis
 
-1) What is Received Amount Ratio per Month and Year? What the day that __Noverde__ received value was the higher in each month?
+1) What is the Received Amount Ratio per Month and Year? What the day that __Noverde__ received value was the higher in each month?
 
   Result Example:
   ```
@@ -140,7 +140,7 @@ The Answer for each question must have at least the Query used to generate the r
   ```
 
 2) One of our Investor wants to know what are the Key Portfolio Highlights for each Month?
-  > Note: The Highlits are: `Average Payment Date`, `Average Interest Rate` and `Most Frequently Payday`.
+  > Note: The Key Portfolio Highlits are: `Average Payment Date`, `Average Interest Rate` and `Most Frequently Payday`.
 
   Result Example:
   ```
@@ -183,17 +183,16 @@ __*Data Analyst*__ your solution must be inside notebook ready to be run
 
 You know the drill: Any language, any framework, any platform. Feel free to use anything to help you finishing this tasks.
 
-*Tips*
+### Tips
+
 - All of your CODE need to be well documented, organized and clean.
 - All of your QUERY need to perform well, be maintainable and return accurate data.
 
-## References
+### Possible Deliverables 
 
-- Databricks Community: https://community.cloud.databricks.com
 - all-spark-notebook docker: https://hub.docker.com/r/jupyter/all-spark-notebook/
+- Databricks Community: https://community.cloud.databricks.com
 - Google Colab: https://colab.research.google.com/
-
-### For Google Colab
 
 Following these instructions and you'll be able to use Spark on the Google Colab Notebook (Adaptation from https://movile.blog/introducao-a-spark-usando-o-google-colab/)
 

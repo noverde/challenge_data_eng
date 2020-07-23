@@ -119,7 +119,6 @@ The `OverN` metric is a list of Boolean values, where each value indicates if pa
 The key Objective it's to respond to a series of business questions made by our Business Areas with the result Table from Part - 1.
 The Answer for each question must have at least the Query used to generate the result and one of the following representations :
 - Table View
-- Parquet File
 - Chart
 
 ### Analysis
@@ -178,15 +177,15 @@ The Answer for each question must have at least the Query used to generate the r
 
 ## Deliverable
 
-You know the drill: Any language, any framework, any platform. Feel free to use anything to help you finishing this tasks.
-
-*Tips*
-- All of your Queries need to perform well, be maintainable and return accurate data.
-- All of you Solutions needs to be scalable! The SRE Team insists that we approach carefully with the "Execution Size" in each month. 
-
 __*Data Engineer*__ your solution must be inside a docker image, script or notebook ready to be run. If you provide a docker image, please send it with a backend service. Running this container should start the necessary infrastructure to provide the endpoints.
 
 __*Data Analyst*__ your solution must be inside notebook ready to be run
+
+You know the drill: Any language, any framework, any platform. Feel free to use anything to help you finishing this tasks.
+
+*Tips*
+- All of your CODE need to be well documented, organized and clean.
+- All of your QUERY need to perform well, be maintainable and return accurate data.
 
 ## References
 

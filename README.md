@@ -85,32 +85,27 @@ payments:
   method: boleto
   amount: 295.17
 metrics:
-  latency: [false, false, false, true, true, true, false, ...]
-  over05: [false, false, true, ...]
-  over15: [false, false, true, ...]
-  over30: [false, false, false, ...]
-```
+  payment_delay: [false, false, false, true, true, true, false, ...]
+  delay_over_30: [false, false, false, false, true, true, false, ...]
+  ```
 
 > Note 1: There is no need to verifying if this Hive Schema is compatible. The main quest here it's to work with complex data Types like array, dictionary and nested structures.
 > Note 2: __*`installments`*__ is a Dictionary using __`installment_number`__ as it's *key* and __`due_date`__ as it's *value*.
 
 ### Metrics
-Each Metric it's stored as an Array where every index it's a specific day from it's origination date *`loan.accepted_at_`* until yesterday.
+Each Metric it's stored as an Array of Booleans, where each index is a direct reference to the number of days from the origination date *`loan.accepted_at_`*.
 
-##### "Latency"
-The `latency` metric is a list of Boolean values, where each value indicates if there is a delay in payment for the *Metric[x]* corresponding date.
+- *Metric[0]*: Origination date *`loan.accepted_at_`*. Example: `2020-07-01`.
+- *Metric[1]*: One day later after the origination date *`loan.accepted_at_`*. Example: `2020-07-02`.
+- *Metric[5]*: Five days later after the origination date *`loan.accepted_at_`*. Example: `2020-07-06`.
+- *Metric[n]*: Today.
 
-- Latency[0]: Origination date *`loan.accepted_at_`*. Example: `2020-07-01`.
-- Latency[1]: One day later after the origination date *`loan.accepted_at_`*. Example: `2020-07-02`.
-- Latency[n]: Yesterday. Example: `2020-07-07`.
+##### "Payment_delay"
+The `payment_delay` metric is a list that represents if that is a `payment_delay` on `loan`.
 
-#### "Over(N)" Metric
+#### "Delay_Over_(N)" Metric
+The `Delay_Over_(N)` metric is a list that represents if the `payment_delay` was over N (Number of day).
 
-The `OverN` metric is a list of Boolean values, where each value indicates if payment of a specific installment *Metric[x]* had a `N` number of days in delay in payment.
-
-- Over05[0]: The `payment_date` of the `installment number`[0] was made 05 days later than the `due date`
-- Over15[1]: The `payment_date` of the `installment number`[1] was made 15 days later than the `due date`
-- Over30[n]: The `payment_date` of the `installment number`[N] was made 30 days later than the `due date`
 
 ## Part 2 - Data Analysis
 

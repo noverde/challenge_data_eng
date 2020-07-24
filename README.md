@@ -117,7 +117,7 @@ The `OverN` metric is a list of Boolean values, where each value indicates if pa
 ### Objective
 
 The key Objective it's to respond to a series of business questions made by our Business Areas with the result from Part 1.
-*tip*
+
 Your answers have to contain your Code/Query and the result at least have to be in one of the following representations:
 - Table View.
 - Chart.

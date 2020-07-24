@@ -92,7 +92,7 @@ metrics:
 ```
 
 > Note 1: There is no need to verifying if this Hive Schema is compatible. The main quest here it's to work with complex data Types like array, dictionary and nested structures.
-> Note 2: __*`installments`*__ is a Dictionary using __`installment_number`__ as it's *key* and __`due_date`__ as it's *value*
+> Note 2: __*`installments`*__ is a Dictionary using __`installment_number`__ as it's *key* and __`due_date`__ as it's *value*.
 
 ### Metrics
 Each Metric it's stored as an Array where every index it's a specific day from it's origination date *`loan.accepted_at_`* until yesterday.
@@ -100,9 +100,9 @@ Each Metric it's stored as an Array where every index it's a specific day from i
 ##### "Latency"
 The `latency` metric is a list of Boolean values, where each value indicates if there is a delay in payment for the *Metric[x]* corresponding date.
 
-- Latency[0]: Origination date *`loan.accepted_at_`*. Example: `2020-07-01`
-- Latency[1]: One day later after the origination date *`loan.accepted_at_`*. Example: `2020-07-02`
-- Latency[n]: Yesterday. Example: `2020-07-07`
+- Latency[0]: Origination date *`loan.accepted_at_`*. Example: `2020-07-01`.
+- Latency[1]: One day later after the origination date *`loan.accepted_at_`*. Example: `2020-07-02`.
+- Latency[n]: Yesterday. Example: `2020-07-07`.
 
 #### "Over(N)" Metric
 
@@ -116,10 +116,11 @@ The `OverN` metric is a list of Boolean values, where each value indicates if pa
 
 ### Objective
 
-The key Objective it's to respond to a series of business questions made by our Business Areas with the result Table from Part - 1.
-The Answer for each question must have at least the Query used to generate the result and one of the following representations :
-- Table View
-- Chart
+The key Objective it's to respond to a series of business questions made by our Business Areas with the result from Part 1.
+*tip*
+Your answers have to contain your Code/Query and the result at least have to be in one of the following representations:
+- Table View.
+- Chart.
 
 ### Analysis
 
@@ -152,7 +153,7 @@ The Answer for each question must have at least the Query used to generate the r
   ```
 
 3)	Thinking about our entire client portfolio, what is the real distribution between contracts with different terms and rates?
-  > Note: The distribution are given by the amount of contracts (loans) per duration and tax rate
+  > Note: The distribution are given by the amount of contracts (loans) per duration and tax rate.
 
   Result Example:
   ```
@@ -166,7 +167,7 @@ The Answer for each question must have at least the Query used to generate the r
   ```
 
 4)	What's the Ratio of Matured Loans in our Portfolio that has at least one installment with Over 30 in payment delay?
-  > Note: Matured Loan in this question means any Loan that the first `installment_date` occurred at least one month ago--
+  > Note: Matured Loan in this question means any Loan that the first `installment_date` occurred at least one month ago.
 
   Result Example:
   ```
@@ -179,14 +180,15 @@ The Answer for each question must have at least the Query used to generate the r
 
 __*Data Engineer*__ your solution must be inside a docker image, script or notebook ready to be run. If you provide a docker image, please send it with a backend service. Running this container should start the necessary infrastructure to provide the endpoints.
 
-__*Data Analyst*__ your solution must be inside notebook ready to be run
+__*Data Analyst*__ your solution must be inside notebook ready to be run.
 
 You know the drill: Any language, any framework, any platform. Feel free to use anything to help you finishing this tasks.
 
 ### Tips
 
-- All of your CODE need to be well documented, organized and clean.
-- All of your QUERY need to perform well, be maintainable and return accurate data.
+- All of your CODE need to be well Documented, Organized and Clean.
+- All of your DATA need to be Accurate, Reliable, Relevant and Clean.
+- All of your QUERY need to be Simple, Maintainable and Clean.
 
 ### Possible Deliverables 
 

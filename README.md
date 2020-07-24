@@ -93,18 +93,18 @@ metrics:
 > Note 2: __*`installments`*__ is a Dictionary using __`installment_number`__ as it's *key* and __`due_date`__ as it's *value*.
 
 ### Metrics
-Each Metric it's stored as an Array of Booleans, where each index is a direct reference to the number of days from the origination date *`loan.accepted_at_`*.
+Each Metric it's stored as an Array of Booleans, where each index is a direct reference to the number of days from the origination date __*`loan.accepted_at`*__.
 
-- *Metric[0]*: Origination date *`loan.accepted_at_`*. Example: `2020-07-01`.
-- *Metric[1]*: One day later after the origination date *`loan.accepted_at_`*. Example: `2020-07-02`.
-- *Metric[5]*: Five days later after the origination date *`loan.accepted_at_`*. Example: `2020-07-06`.
+- *Metric[0]*: Origination date __*`loan.accepted_at`*__. Example: `2020-07-01`.
+- *Metric[1]*: One day later after the origination date __*`loan.accepted_at`*__. Example: `2020-07-02`.
+- *Metric[5]*: Five days later after the origination date __*`loan.accepted_at`*__. Example: `2020-07-06`.
 - *Metric[n]*: Today.
 
 ##### "Payment_delay"
-The `payment_delay` metric is a list that represents if that is a `payment_delay` on `loan`.
+The *`payment_delay`* metric is a list that represents if that is a *`payment_delay`* on __`loan`__.
 
 #### "Delay_Over_(N)" Metric
-The `Delay_Over_(N)` metric is a list that represents if the `payment_delay` was over N (Number of day).
+The *`delay_over_(N)`* metric is a list that represents if the *`payment_delay`* was over N (Number of day).
 
 
 ## Part 2 - Data Analysis
